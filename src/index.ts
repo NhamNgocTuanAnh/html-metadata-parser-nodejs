@@ -8,6 +8,7 @@ interface Meta {
     url?: string,
     type?: string,
     site_name?: string
+    keywords?: string
 }
 
 
@@ -26,6 +27,8 @@ const parse = async (url: string, config?: AxiosRequestConfig) => {
     const og: Meta = {}, meta: Meta = {}, images = [];
 
     const title = $.querySelector('title');
+    const keywords = $.querySelector('keywords');
+
     if (title)
         meta.title = title.text;
 
@@ -34,6 +37,9 @@ const parse = async (url: string, config?: AxiosRequestConfig) => {
         meta.url = canonical.getAttribute('href');
     }
 
+    if (keywords){
+        meta.keywords = keywords.text;
+    }
 
     const metas = $.querySelectorAll('meta');
 
@@ -47,7 +53,7 @@ const parse = async (url: string, config?: AxiosRequestConfig) => {
             if (val) meta[s] = val;
         });
 
-        ['og:title', 'og:description', 'og:image', 'og:url', 'og:site_name', 'og:type'].forEach(s => {
+        ['og:title', 'og:description', 'og:image', 'og:url', 'og:site_name', 'og:type','og:keywords' ].forEach(s => {
             const val = readMT(el, s);
             if (val) og[s.split(':')[1]] = val;
         });

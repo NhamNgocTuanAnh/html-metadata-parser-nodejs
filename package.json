@@ -34,6 +34,7 @@
   "homepage": "https://morioh.com/topic/node-js",
   "dependencies": {
     "axios": "^0.21.1",
+    "html-metadata-parser": "^2.0.4",
     "node-html-parser": "^4.1.0"
   },
   "devDependencies": {
