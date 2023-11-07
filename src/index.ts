@@ -32,13 +32,13 @@ const parse = async (url: string, config?: AxiosRequestConfig) => {
     if (title)
         meta.title = title.text;
 
+    if (keywords){
+        meta.keywords = keywords.text;
+    }
+
     const canonical = $.querySelector('link[rel=canonical]');
     if (canonical) {
         meta.url = canonical.getAttribute('href');
-    }
-
-    if (keywords){
-        meta.keywords = keywords.text;
     }
 
     const metas = $.querySelectorAll('meta');
@@ -48,12 +48,12 @@ const parse = async (url: string, config?: AxiosRequestConfig) => {
 
         // const prop = el.getAttribute('property') || el.getAttribute('name');
 
-        ['title', 'description', 'image'].forEach(s => {
+        ['title', 'description', 'image', 'keywords'].forEach(s => {
             const val = readMT(el, s);
             if (val) meta[s] = val;
         });
 
-        ['og:title', 'og:description', 'og:image', 'og:url', 'og:site_name', 'og:type','og:keywords' ].forEach(s => {
+        ['og:title', 'og:description', 'og:image', 'og:url', 'og:site_name', 'og:type'].forEach(s => {
             const val = readMT(el, s);
             if (val) og[s.split(':')[1]] = val;
         });
